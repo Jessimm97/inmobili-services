@@ -1,10 +1,13 @@
 package com.micro.properties.model;
 
+import com.micro.properties.dto.AgentDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor; // <--- NUEVO
+import lombok.AllArgsConstructor; 
 import lombok.Data;
-import lombok.NoArgsConstructor;  // <--- NUEVO
+import lombok.NoArgsConstructor;  
 import java.time.LocalDateTime;
+import java.util.ArrayList; 
+import java.util.List;
 
 @Entity
 @Table(name = "properties")
@@ -20,7 +23,9 @@ public class Property {
     private String title;
     private String location;
     private String price;
-    private String description; // Tip: Si el texto es muy largo, a veces necesitas @Column(length=1000)
+    
+    @Column(columnDefinition = "TEXT")
+    private String description;
     
     private int bedrooms;
     private int bathrooms;
@@ -34,6 +39,17 @@ public class Property {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @ElementCollection
+    @CollectionTable(
+        name = "property_features", 
+        joinColumns = @JoinColumn(name = "property_id")
+    )
+    @Column(name = "feature")
+    private List<String> features = new ArrayList<>();
+
+    @Transient 
+    private AgentDTO agentData;
 
     @PrePersist
     protected void onCreate() {

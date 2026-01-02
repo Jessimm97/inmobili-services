@@ -37,4 +37,13 @@ public class PropertyController {
         }
         return ResponseEntity.ok(property);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Property>> searchProperties(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) Integer minBedrooms,
+            @RequestParam(required = false) Double maxPrice
+    ) {
+        return ResponseEntity.ok(propertyService.searchProperties(keyword, minBedrooms, maxPrice));
+    }
 }
