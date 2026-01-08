@@ -1,49 +1,19 @@
-server:
-  port: 8080 # Puerto estándar de entrada
-
 spring:
-  application:
-    name: micro-gateway
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true # Permite encontrar servicios automáticamente
-          lower-case-service-id: true
-      
-      # AQUÍ DEFINIMOS LAS REGLAS DE TRÁFICO
-      routes:
-        # Regla 1: Tráfico hacia Propiedades
-        - id: properties-service
-          # lb:// significa "Load Balancer". Busca en Eureka un servicio llamado "MICRO-PROPERTIES"
-          uri: lb://MICRO-PROPERTIES
-          predicates:
-            - Path=/api/v1/properties/**, /api/v1/inquiries/**
-          # Opcional: Si el microservicio espera /properties y tú envías /api/v1/properties, usas filtros para reescribir.
-          # Por ahora lo dejaremos pasar tal cual.
-
-        # Regla 2: Tráfico hacia Agentes
-        - id: agents-service
-          uri: lb://MICRO-AGENTS
-          predicates:
-            - Path=/api/v1/agents/**
       globalcors:
-        cors-configurations:
+        add-to-simple-url-handler-mapping: true
+        corsConfigurations:
           '[/**]':
-            allowedOrigins: 
-              - "http://18.224.69.91"
+            allowedOrigins:
               - "http://18.224.69.91:3000"
+              - "http://18.224.69.91"
             allowedMethods:
               - GET
               - POST
               - PUT
               - DELETE
-            allowedHeaders: "*"
+              - OPTIONS
+            allowedHeaders:
+              - "*"
             allowCredentials: false
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://micro-eureka:8761/eureka/ # Conexión con el jefe
-    register-with-eureka: true
-    fetch-registry: true
