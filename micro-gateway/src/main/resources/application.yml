@@ -6,8 +6,8 @@ spring:
         corsConfigurations:
           '[/**]':
             allowedOrigins:
-              - "http://18.224.69.91:3000"
-              - "http://18.224.69.91"
+              - "http://18.116.100.86:3000"
+              - "http://18.116.100.86"
             allowedMethods:
               - GET
               - POST
