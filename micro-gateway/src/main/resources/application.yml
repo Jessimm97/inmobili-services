@@ -1,6 +1,19 @@
 spring:
   cloud:
     gateway:
+      routes:
+        - id: micro-properties
+          uri: lb://MICRO-PROPERTIES
+          predicates:
+            - Path=/api/v1/properties/**
+        - id: micro-inquiries
+          uri: lb://MICRO-PROPERTIES
+          predicates:
+            - Path=/api/v1/inquiries/**
+        - id: micro-agents
+          uri: lb://MICRO-AGENTS
+          predicates:
+            - Path=/api/v1/agents/**
       globalcors:
         add-to-simple-url-handler-mapping: true
         corsConfigurations:

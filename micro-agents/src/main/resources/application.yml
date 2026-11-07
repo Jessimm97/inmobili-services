@@ -5,16 +5,16 @@ spring:
   application:
     name: micro-agents
   datasource:
-    url: jdbc:postgresql://postgres-db:5432/immobili_db
-    username: admin
-    password: password123
-    driver-class-name: org.postgresql.Driver
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/immobili_db?serverTimezone=UTC}
+    username: ${SPRING_DATASOURCE_USERNAME:admin}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.MySQLDialect
 
 eureka:
   client:
